@@ -6,15 +6,13 @@ import br.com.mtanuri.ada.t1172.poo2.aula2.validadores.ValidacaoUsuario;
 
 import java.time.LocalDate;
 
-public class CPFValidador implements ValidacaoUsuario {
+public class IdadeValidator implements ValidacaoUsuario {
 
     @Override
     public void validar(UsuarioDTO usuarioDTO) throws DadosUsuarioInvalidosException {
-        if ("Brasil".equalsIgnoreCase(usuarioDTO.pais())) {
-            String cpf = usuarioDTO.documento();
-            if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
-                throw new DadosUsuarioInvalidosException("O CPF é inválido.");
-            }
+        if (usuarioDTO.dataNascimento().getYear() - LocalDate.now().getYear() < 18) {
+            return;
         }
+        throw new DadosUsuarioInvalidosException("Deve ter pelo menos 1 nome e 1 sobrenome com pelo menos 1 letra em cada um.");
     }
 }
